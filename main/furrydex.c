@@ -28,10 +28,13 @@ static void led_init(void)
 
 static void led_set(bool on)
 {
-    if (on) {
+    if (on)
+    {
         ESP_ERROR_CHECK(led_strip_set_pixel(led, 0, 16, 16, 16));
         ESP_ERROR_CHECK(led_strip_refresh(led));
-    } else {
+    }
+    else
+    {
         ESP_ERROR_CHECK(led_strip_clear(led));
     }
 }
@@ -41,10 +44,11 @@ void app_main(void)
     led_init();
     ESP_LOGI(TAG, "Blink started on GPIO %d", LED_GPIO);
 
-    bool on = false;
+    bool     on = false;
     uint32_t count = 0;
 
-    while (true) {
+    while (true)
+    {
         on = !on;
         led_set(on);
         ESP_LOGI(TAG, "#%lu LED %s", (unsigned long)++count, on ? "ON" : "OFF");
