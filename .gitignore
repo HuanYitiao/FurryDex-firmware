@@ -1,0 +1,11 @@
+# ESP-IDF 编译产物
+build/
+sdkconfig.old
+
+# 组件管理器下载的依赖，由 dependencies.lock 还原
+managed_components/
+
+# 编辑器配置：settings.json 里有本机绝对路径
+.vscode/*
+!.vscode/c_cpp_properties.json
+.clangd
