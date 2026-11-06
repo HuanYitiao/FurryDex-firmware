@@ -1,10 +1,10 @@
-# FurryDex Firmware
+# con-venience Firmware
 
-FurryDex is a wearable social device for fursuiters: two wearers touch their devices together to exchange contact information.
+con-venience is a wearable social device for fursuiters: two wearers touch their devices together to exchange contact information.
 
 This repository migrates [con-venience-firmware](https://github.com/HuanYitiao/con-venience-firmware) (Arduino + PlatformIO, with working hardware and core features) to ESP-IDF. The work has two parts: first the hardware drivers in `middleware`, then the `application` built on top of them.
 
-**Current status:** the M0 project skeleton is written and builds locally, but it has not been committed or flashed. The firmware is still the LED blink example.
+**Current status:** M0 is done: CI passes, and the LED blink example runs on the board with logs on the native USB port. Next is M1, the power keep-alive.
 
 ## Hardware
 
@@ -25,7 +25,8 @@ Requires ESP-IDF v6.1. The target is `esp32c6`.
 ```bash
 source ~/esp/esp-idf/export.sh
 idf.py build
-idf.py -p /dev/ttyACM0 flash monitor
+idf.py -p /dev/ttyACM0 flash
+idf.py -p /dev/ttyACM1 monitor
 ```
 
 Configuration changes go in [sdkconfig.defaults](sdkconfig.defaults).
@@ -43,7 +44,7 @@ Configuration changes go in [sdkconfig.defaults](sdkconfig.defaults).
 `middleware/board` exists. Everything else is planned.
 
 ```
-FurryDex-firmware/
+con-venience-ESP-IDF-firmware/
 ├── CMakeLists.txt
 ├── partitions.csv
 ├── sdkconfig.defaults
@@ -82,7 +83,7 @@ Status: ✅ done, 🚧 in progress, ⬜ not started.
 
 | Status | Step | Module | Main work | Acceptance |
 |---|---|---|---|---|
-| 🚧 | M0 | Project skeleton | Directories, partition table, `sdkconfig.defaults`, pin map | CI passes, logs appear on serial |
+| ✅ | M0 | Project skeleton | Directories, partition table, `sdkconfig.defaults`, pin map | CI passes, logs appear on serial |
 | ⬜ | M1 | `board` + `mcp23017` + `power` keep-alive | `i2c_master` driver, port the BANK switch and `powerEarlyInit` | Stays powered for more than 6 s on battery |
 | ⬜ | M2 | `pcf85063a` + shutdown/wake | Time read/write, countdown timer, `powerSleep` | Buttons and the RTC both wake the device, with the correct wake reason |
 | ⬜ | M3 | `button` | INT interrupt notifies a task, debounce and long press | Click and long press work on all 5 buttons |
@@ -98,7 +99,7 @@ BLE comes before ACOM because ACOM sends the BLE address and address type, which
 
 M0 builds locally. CI and serial logs are not verified yet.
 
-The self-test from the old `test_main.cpp` also moves over, behind a `CONFIG_FURRYDEX_SELFTEST` option. Each finished module adds a test to it.
+The self-test from the old `test_main.cpp` also moves over, behind a `CONFIG_CONVENIENCE_SELFTEST` option. Each finished module adds a test to it.
 
 ### Application
 

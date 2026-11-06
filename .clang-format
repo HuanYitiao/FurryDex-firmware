@@ -1,4 +1,4 @@
-# FurryDex firmware code style
+# con-venience firmware code style
 # ESP-IDF — Allman braces, 4-space indent, 100 col limit
 
 BasedOnStyle: Google

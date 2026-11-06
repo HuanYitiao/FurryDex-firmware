@@ -9,7 +9,7 @@
 
 #define BLINK_PERIOD_MS 500
 
-static const char *TAG = "furrydex";
+static const char *TAG = "con-venience";
 
 static led_strip_handle_t led;
 
