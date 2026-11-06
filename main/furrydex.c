@@ -1,12 +1,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "board_pins.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "led_strip.h"
 
-#define LED_GPIO 8
 #define BLINK_PERIOD_MS 500
 
 static const char *TAG = "furrydex";
@@ -16,7 +16,7 @@ static led_strip_handle_t led;
 static void led_init(void)
 {
     led_strip_config_t strip_config = {
-        .strip_gpio_num = LED_GPIO,
+        .strip_gpio_num = PIN_LED,
         .max_leds = 1,
     };
     led_strip_rmt_config_t rmt_config = {
@@ -42,7 +42,7 @@ static void led_set(bool on)
 void app_main(void)
 {
     led_init();
-    ESP_LOGI(TAG, "Blink started on GPIO %d", LED_GPIO);
+    ESP_LOGI(TAG, "Blink started on GPIO %d", PIN_LED);
 
     bool     on = false;
     uint32_t count = 0;
