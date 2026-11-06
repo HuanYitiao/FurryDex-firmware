@@ -25,7 +25,7 @@ Requires ESP-IDF v6.1. The target is `esp32c6`.
 ```bash
 source ~/esp/esp-idf/export.sh
 idf.py build
-idf.py -p /dev/ttyUSB0 flash monitor
+idf.py -p /dev/ttyACM0 flash monitor
 ```
 
 Configuration changes go in [sdkconfig.defaults](sdkconfig.defaults).
@@ -164,7 +164,7 @@ The PCF85063A remains the source of wall-clock time.
 
 | Setting | IDF default | This project | Status |
 |---|---|---|---|
-| Flash size | 2MB | 4MB for now | Set, real capacity to be confirmed |
+| Flash size | 2MB | 16MB, measured with `esptool flash-id` | Set |
 | Partition table | Default single app | Custom, 3MB app partition | Set |
 | Main task stack | 3584 bytes | 8192 bytes, may become a dedicated task later | Set |
 | `max_uri_handlers` | 8 | At least 12: the old firmware has 12 routes plus a not-found handler | M10 |
@@ -172,7 +172,7 @@ The PCF85063A remains the source of wall-clock time.
 
 ## Open questions
 
-- **Real flash size:** update `sdkconfig.defaults` once confirmed, and check again when moving to a module.
+- **Flash size on a bare module:** check again and update `sdkconfig.defaults` when moving off the DevKit.
 - **Profile upload format:** decide at A5. If `profile-generator.html` can change, one raw POST per file is simplest. To stay compatible with the old page on existing cards, write a small multipart parser.
 
 ## Decisions
